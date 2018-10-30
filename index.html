@@ -16,15 +16,15 @@
   </head>
   <body>
     <style>
-	    * {
-	    	font-family: 'Roboto Mono', monospace;
-	    }
+      * {
+      	font-family: 'Roboto Mono', monospace;
+      }
 
-	    .gray {
-	    	color: gray;
-	    }
+      .gray {
+      	color: gray;
+      }
     </style>
-	<div id="root"></div>
+    <div id="root"></div>
     <script type="text/babel">
     	class Question extends React.Component {
 			constructor(props) {
@@ -55,6 +55,7 @@
 			render() {
 				const { text, answered, answer, id } = this.props;
 				const { proposal } = this.state;
+        const texts = text.map(e => <p key={e}>{e}</p>);
 				let answerText;
 				if (answered) {
 					answerText = (
@@ -79,7 +80,7 @@
 					<div className="row d-flex flex-column">
 						<div className="col-12">
 							<p className="gray">Question #{id}</p>
-							<p>{text}</p>
+							{texts}
 							{answerText}
 						</div>
 					</div>
@@ -131,53 +132,48 @@
 		const questions = [
 			{
 				'id': 1,
-			 	'text': 'Alcatraz a connu de nombreuses pertes avant sa fermeture en Mars 1963. \
-        Si on multiplie le nombre de prisonniers qui ont essayé de s\'échaper\
-        par le nombre de tentatives d\'évasions, qu\'on ajoute à ce nombre la multiplication \
-        du nombre de prisonniers abattu par balle par le nombre de prisonniers noyés, \
-        on obtient le chiffre: ',
+			 	'text': [
+          "Alcatraz a connu de nombreuses pertes avant sa fermeture en mars 1963.",
+          "Si on multiplie le nombre de prisonniers qui ont essayé de s'échapper par le nombre de tentatives d'évasions, qu'on ajoute à ce nombre la multiplication du nombre de prisonniers abattus par balle par le nombre de prisonniers noyés, on obtient le chiffre:"
+        ],
 				'answer': '516'
 			},
 			{
 				'id': 2,
-			 	'text': 'L\'air de Paris est si mauvais que je le fais toujours bouillir \
-        avant de le respirer. Ajoutez deux lettres à Paris: c\'est la paradis. \
-        Allez donc commander une bière au "Le Petit Paris" \
-        (Rue Charles Degroux 2, 1040 Etterbeek - 1 min à pied).\
-        Entrez les chiffres de la ligne 7.',
+			 	'text': [
+          "L'air de Paris est si mauvais que je le fais toujours bouillir avant de le respirer. Ajoutez deux lettres à Paris: c'est le paradis. Allez donc commander une bière au bar du 'Le Petit Paris' (Rue Charles Degroux 2, 1040 Etterbeek - 1 min à pied). N’oubliez pas de dire que vous venez pour Halloween!",
+          "Entrez les chiffres de la ligne 7."
+        ],
 				'answer': '251897643'
 			},
 			{
 				'id': 3,
-			 	'text': 'Clarence Anglin et ses gros seins ont failli se faire pincer back in the days. \
-        Venter sa vie et ses exploits était déjà un culte dans les années 60. \
-        Zuck et sa team de lézards agissaient déjà dans l\'ombre et ont bien failli \
-        remettre Anglin sous les barreaux suite à une photo révélant sa localisation. \
-        Cette photo est d\'ailleurs toujours visible sur son compte Instagram (tictactoc santé). \
-        Rendez-vous à l\'endroit ou Anglin a failli se faire coincer. Vous y trouverez \
-        son numéro de téléphone. Entrez le ici.\
-        ',
+			 	'text': [
+          "Clarence Anglin et ses gros seins ont failli se faire pincer back in the days. Venter sa vie et ses exploits était déjà un culte dans les années 60. Zuck et sa team de lézards agissaient déjà dans l'ombre et ont bien failli remettre Anglin sous les barreaux, suite à une photo révélant sa localisation. Cette photo est d'ailleurs toujours visible sur son compte Instagram (tictactoc santé).",
+          "Rendez-vous à l'endroit ou Anglin a failli se faire coincer. Vous y trouverez son numéro de téléphone. Entrez-le ici."
+        ],
 				'answer': '0479419481'
 			},
       {
 				'id': 4,
-			 	'text': 'Appelez le numéro d\'Anglin et entrez le message codé.\
-        ',
+			 	'text': [
+          "Appelez le numéro d'Anglin et entrez le message codé."
+        ],
 				'answer': '3615'
 			},
       {
 				'id': 5,
-			 	'text': 'Rendez-vous dans la cabanne où Anglin et Angelina avaient l\'habitude \
-        de se rencontrer (utilisez votre carte!). En quelle année Anglin et Angelina \
-        se sont-ils retrouvés ici ?\
-        ',
+			 	'text':[
+          "Rendez-vous dans la cabane où Anglin et Angelina avaient l'habitude de se rencontrer (utilisez votre carte!).",
+          "En quelle année Anglin et Angelina se sont-ils retrouvés ici ?"
+        ],
 				'answer': '1999'
 			},
       {
 				'id': 6,
-			 	'text': 'Well done, vous y êtes presque. Rendez-vous à la citrouille \
-        pour récupérer votre trésor.\
-        ',
+			 	'text': [
+          "Well done, vous y êtes presque! Rendez-vous à la citrouille pour récupérer votre trésor."
+        ],
 				'answer': '1999'
 			},
 		]
