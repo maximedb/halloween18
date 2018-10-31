@@ -25,163 +25,216 @@
       }
     </style>
     <div id="root"></div>
-    <script type="text/babel">
-    	class Question extends React.Component {
-			constructor(props) {
-				super(props)
-				this.props = props;
-				this.answerQuestion = this.answerQuestion.bind(this);
-				this.handleChange = this.handleChange.bind(this);
-				this.state = {
-					proposal: ''
-				}
-			}
+    <script type="text/javascript">
+    var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-			answerQuestion(event) {
-				event.preventDefault();
-				const { answer, id, transmit } = this.props;
-				const { proposal } = this.state;
-				if (answer.toLowerCase().trim() == proposal.toLowerCase().trim()) {
-					transmit(id);
-				} else {
-					alert('Wrong answer bitch');
-				}
-			}
+    function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
-			handleChange(event) {
-				this.setState({ proposal: event.target.value });
-			}
+    function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
 
-			render() {
-				const { text, answered, answer, id } = this.props;
-				const { proposal } = this.state;
-        const texts = text.map(e => <p key={e}>{e}</p>);
-				let answerText;
-				if (answered) {
-					answerText = (
-						<React.Fragment>
-							<p>
-								<span className="gray">Réponse:</span> {answer}
-							</p>
-							<p>
-								---------------
-							</p>
-						</React.Fragment>
-					);
-				} else {
-					answerText = (
-						<form className="form-inline">
-							<input type="text" className="form-control mr-3" value={proposal} onChange={this.handleChange} placeholder="Réponse" />
-							<button type="submit" onClick={this.answerQuestion} className="btn btn-primary">Envoyer</button>
-						</form>
-					);
-				}
-				return (
-					<div className="row d-flex flex-column">
-						<div className="col-12">
-							<p className="gray">Question #{id}</p>
-							{texts}
-							{answerText}
-						</div>
-					</div>
-				);
-			}
-		}
+    function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-		class QuestionsManager extends React.Component {
-			constructor(props) {
-				super(props)
-				this.props = props;
-				this.answerQuestion = this.answerQuestion.bind(this);
-				const current = parseInt(localStorage.getItem('current') || '1');
-				this.state = {
-					current: current
-				}
-			}
+    var Question = function (_React$Component) {
+    	_inherits(Question, _React$Component);
 
-			answerQuestion(id) {
-				localStorage.setItem('current', id + 1);
-				this.setState({ current: id + 1 })
-			}
+    	function Question(props) {
+    		_classCallCheck(this, Question);
 
-			render() {
-				const { questions } = this.props;
-				const { current } = this.state;
-				const questionsDom = questions.map((e, index) => {
-					if (e.id <= current) {
-						const answered = current > e.id ? true : false;
-						return <Question key={e.id} id={e.id} text={e.text} answered={answered} answer={e.answer} transmit={this.answerQuestion} />
-					}
-				});
-				return (
-					<div className="container pt-3 pb-3">
-            <p className="mb-3">
-              Bienvenue dans le jeu de piste <i>Straigh Outta Alcatraz</i>.
-              Ce site sera votre buddy. Les règles sont simples, répondez correctement
-              à chaque question, et une autre apparaitra. La première équipe arrivéé
-              au point de rendez-vous gagne.
-            </p>
-						{questionsDom}
-					</div>
-				);
+    		var _this = _possibleConstructorReturn(this, (Question.__proto__ || Object.getPrototypeOf(Question)).call(this, props));
 
-			}
+    		_this.props = props;
+    		_this.answerQuestion = _this.answerQuestion.bind(_this);
+    		_this.handleChange = _this.handleChange.bind(_this);
+    		_this.state = {
+    			proposal: ''
+    		};
+    		return _this;
+    	}
 
-		}
+    	_createClass(Question, [{
+    		key: 'answerQuestion',
+    		value: function answerQuestion(event) {
+    			event.preventDefault();
+    			var _props = this.props,
+    			    answer = _props.answer,
+    			    id = _props.id,
+    			    transmit = _props.transmit;
+    			var proposal = this.state.proposal;
 
-		const questions = [
-			{
-				'id': 1,
-			 	'text': [
-          "Alcatraz a connu de nombreuses pertes avant sa fermeture en mars 1963.",
-          "Si on multiplie le nombre de prisonniers qui ont essayé de s'échapper par le nombre de tentatives d'évasions, qu'on ajoute à ce nombre la multiplication du nombre de prisonniers abattus par balle par le nombre de prisonniers noyés, on obtient le chiffre:"
-        ],
-				'answer': '516'
-			},
-			{
-				'id': 2,
-			 	'text': [
-          "L'air de Paris est si mauvais que je le fais toujours bouillir avant de le respirer. Ajoutez deux lettres à Paris: c'est le paradis. Allez donc commander une bière au bar du 'Le Petit Paris' (Rue Charles Degroux 2, 1040 Etterbeek - 1 min à pied). N’oubliez pas de dire que vous venez pour Halloween!",
-          "Entrez les chiffres de la ligne 7."
-        ],
-				'answer': '251897643'
-			},
-			{
-				'id': 3,
-			 	'text': [
-          "Clarence Anglin et ses gros seins ont failli se faire pincer back in the days. Venter sa vie et ses exploits était déjà un culte dans les années 60. Zuck et sa team de lézards agissaient déjà dans l'ombre et ont bien failli remettre Anglin sous les barreaux, suite à une photo révélant sa localisation. Cette photo est d'ailleurs toujours visible sur son compte Instagram (tictactoc santé).",
-          "Rendez-vous à l'endroit ou Anglin a failli se faire coincer. Vous y trouverez son numéro de téléphone. Entrez-le ici."
-        ],
-				'answer': '0479419481'
-			},
-      {
-				'id': 4,
-			 	'text': [
-          "Appelez le numéro d'Anglin et entrez le message codé."
-        ],
-				'answer': '3615'
-			},
-      {
-				'id': 5,
-			 	'text':[
-          "Rendez-vous dans la cabane où Anglin et Angelina avaient l'habitude de se rencontrer (utilisez votre carte!).",
-          "En quelle année Anglin et Angelina se sont-ils retrouvés ici ?"
-        ],
-				'answer': '1999'
-			},
-      {
-				'id': 6,
-			 	'text': [
-          "Well done, vous y êtes presque! Rendez-vous à la citrouille pour récupérer votre trésor."
-        ],
-				'answer': '1999'
-			},
-		]
+    			if (answer.toLowerCase().trim() == proposal.toLowerCase().trim()) {
+    				transmit(id);
+    			} else {
+    				alert('Wrong answer bitch');
+    			}
+    		}
+    	}, {
+    		key: 'handleChange',
+    		value: function handleChange(event) {
+    			this.setState({ proposal: event.target.value });
+    		}
+    	}, {
+    		key: 'render',
+    		value: function render() {
+    			var _props2 = this.props,
+    			    text = _props2.text,
+    			    answered = _props2.answered,
+    			    answer = _props2.answer,
+    			    id = _props2.id;
+    			var proposal = this.state.proposal;
 
-		ReactDOM.render(
-			<QuestionsManager questions={questions}/>,
-			document.getElementById('root')
-		);
+    			var texts = text.map(function (e) {
+    				return React.createElement(
+    					'p',
+    					{ key: e },
+    					e
+    				);
+    			});
+    			var answerText = void 0;
+    			if (answered) {
+    				answerText = React.createElement(
+    					React.Fragment,
+    					null,
+    					React.createElement(
+    						'p',
+    						null,
+    						React.createElement(
+    							'span',
+    							{ className: 'gray' },
+    							'R\xE9ponse:'
+    						),
+    						' ',
+    						answer
+    					),
+    					React.createElement(
+    						'p',
+    						null,
+    						'---------------'
+    					)
+    				);
+    			} else {
+    				answerText = React.createElement(
+    					'form',
+    					{ className: 'form-inline' },
+    					React.createElement('input', { type: 'text', className: 'form-control mr-3', value: proposal, onChange: this.handleChange, placeholder: 'R\xE9ponse' }),
+    					React.createElement(
+    						'button',
+    						{ type: 'submit', onClick: this.answerQuestion, className: 'btn btn-primary' },
+    						'Envoyer'
+    					)
+    				);
+    			}
+    			return React.createElement(
+    				'div',
+    				{ className: 'row d-flex flex-column' },
+    				React.createElement(
+    					'div',
+    					{ className: 'col-12' },
+    					React.createElement(
+    						'p',
+    						{ className: 'gray' },
+    						'Question #',
+    						id
+    					),
+    					texts,
+    					answerText
+    				)
+    			);
+    		}
+    	}]);
+
+    	return Question;
+    }(React.Component);
+
+    var QuestionsManager = function (_React$Component2) {
+    	_inherits(QuestionsManager, _React$Component2);
+
+    	function QuestionsManager(props) {
+    		_classCallCheck(this, QuestionsManager);
+
+    		var _this2 = _possibleConstructorReturn(this, (QuestionsManager.__proto__ || Object.getPrototypeOf(QuestionsManager)).call(this, props));
+
+    		_this2.props = props;
+    		_this2.answerQuestion = _this2.answerQuestion.bind(_this2);
+    		var current = parseInt(localStorage.getItem('current') || '1');
+    		_this2.state = {
+    			current: current
+    		};
+    		return _this2;
+    	}
+
+    	_createClass(QuestionsManager, [{
+    		key: 'answerQuestion',
+    		value: function answerQuestion(id) {
+    			localStorage.setItem('current', id + 1);
+    			this.setState({ current: id + 1 });
+    		}
+    	}, {
+    		key: 'render',
+    		value: function render() {
+    			var _this3 = this;
+
+    			var questions = this.props.questions;
+    			var current = this.state.current;
+
+    			var questionsDom = questions.map(function (e, index) {
+    				if (e.id <= current) {
+    					var answered = current > e.id ? true : false;
+    					return React.createElement(Question, { key: e.id, id: e.id, text: e.text, answered: answered, answer: e.answer, transmit: _this3.answerQuestion });
+    				}
+    			});
+    			return React.createElement(
+    				'div',
+    				{ className: 'container pt-3 pb-3' },
+    				React.createElement(
+    					'p',
+    					{ className: 'mb-3' },
+    					'Bienvenue dans le jeu de piste ',
+    					React.createElement(
+    						'i',
+    						null,
+    						'Straigh Outta Alcatraz'
+    					),
+    					'.',
+    					React.createElement('br', null),
+    					'Formez des \xE9quipes de deux et suivez les r\xE8gles.',
+    					React.createElement('br', null),
+    					'Ce site sera votre buddy. Les r\xE8gles sont simples, r\xE9pondez correctement \xE0 chaque question, et une autre apparaitra. La premi\xE8re \xE9quipe arriv\xE9\xE9 au point de rendez-vous gagne.'
+    				),
+    				questionsDom
+    			);
+    		}
+    	}]);
+
+    	return QuestionsManager;
+    }(React.Component);
+
+    var questions = [{
+    	'id': 1,
+    	'text': ["Alcatraz a connu de nombreuses pertes avant sa fermeture en mars 1963.", "Si on multiplie le nombre de prisonniers qui ont essayé de s'échapper par le nombre de tentatives d'évasions, qu'on ajoute à ce nombre la multiplication du nombre de prisonniers abattus par balle par le nombre de prisonniers noyés, on obtient le chiffre:"],
+    	'answer': '516'
+    }, {
+    	'id': 2,
+    	'text': ["L'air de Paris est si mauvais que je le fais toujours bouillir avant de le respirer. Ajoutez deux lettres à Paris: c'est le paradis. Allez donc commander une bière au bar 'Le Petit Paris' (Rue Charles Degroux 2, 1040 Etterbeek - 1 min à pied). Avant de partir, prenez un petit papier que vous donnerez au serveur lors de votre commande.", "Entrez les chiffres de la ligne 7. (à faire après avoir commander votre bière ou autre boisson)"],
+    	'answer': '251897643'
+    }, {
+    	'id': 3,
+    	'text': ["Clarence Anglin et ses gros seins ont failli se faire pincer back in the days. Venter sa vie et ses exploits était déjà un culte dans les années 60. Zuck et sa team de lézards agissaient déjà dans l'ombre et ont bien failli remettre Anglin sous les barreaux, suite à une photo révélant sa localisation. Cette photo est d'ailleurs toujours visible sur son compte Instagram (username = tic_tac_toc santé).", "Rendez-vous à l'endroit ou Anglin a failli se faire coincer. Vous y trouverez son numéro de téléphone. Entrez-le ici."],
+    	'answer': '0479419481'
+    }, {
+    	'id': 4,
+    	'text': ["Appelez le numéro d'Anglin et entrez le message codé."],
+    	'answer': '3615'
+    }, {
+    	'id': 5,
+    	'text': ["Rendez-vous à l'endroit où Anglin et Angelina avaient l'habitude de se rencontrer (tour beyaert - utilisez votre carte!).", "En quelle année Anglin et Angelina se sont-ils retrouvés ici ?"],
+    	'answer': '1999'
+    }, {
+    	'id': 6,
+    	'text': ["Well done, vous y êtes presque! Rendez-vous à la citrouille pour récupérer votre trésor."],
+    	'answer': '1999'
+    }];
+
+    ReactDOM.render(React.createElement(QuestionsManager, { questions: questions }), document.getElementById('root'));
     </script>
 
     <!-- Optional JavaScript -->
